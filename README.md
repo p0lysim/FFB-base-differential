@@ -1,6 +1,8 @@
 # FFB-base-differential
 
-<img src="IMG/Thumbnail.png" alt="1739632903263" style="width:600px;"/>
+[https://github.com/p0lysim/FFB-base-differential/blob/main/IMG/Thumbnail.PNG]()
+
+<img src="IMG/Thumbnail.PNG" alt="1739632903263" style="width:600px;"/>
 
 ## **Components used**
 
