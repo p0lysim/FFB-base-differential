@@ -1,0 +1,199 @@
+odrv0.erase_configuration() 						
+
+#------------------------------------------------STOP / SART GENERIC CONFIG ---------------------------------------
+
+
+odrv0.config.brake_resistance = 2.0
+odrv0.config.dc_bus_undervoltage_trip_level = 5.0
+odrv0.config.dc_bus_overvoltage_trip_level = 56.0
+odrv0.config.dc_max_positive_current = 20.0
+odrv0.config.dc_max_negative_current = -5.0
+odrv0.config.max_regen_current = 0
+odrv0.save_configuration()
+dump_errors(odrv0) 
+
+
+#------------------------------------------------------ START AXIS 0 -------------------------------------------------------
+
+
+# Set according to your motor specifications
+odrv0.axis0.motor.config.pole_pairs = 7  
+odrv0.axis0.config.calibration_lockin.current = 4
+odrv0.axis0.motor.config.resistance_calib_max_voltage = 12.0
+#odrv0.axis0.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
+odrv0.axis0.motor.config.current_lim = 8
+odrv0.axis0.motor.config.requested_current_range = 20
+odrv0.save_configuration()
+dump_errors(odrv0) 
+
+#----------------------------------------------------------------
+
+
+# Configure for AS5048A via SPI
+odrv0.axis0.encoder.config.abs_spi_cs_gpio_pin = 8  # Try pin 1 first
+odrv0.axis0.encoder.config.mode = ENCODER_MODE_SPI_ABS_AMS
+odrv0.axis0.encoder.config.cpr = 16384  # AS5048A is 14-bit (2^14)
+odrv0.axis0.encoder.config.bandwidth = 500
+odrv0.save_configuration()
+dump_errors(odrv0) 
+
+
+#----------------------------------------------------------------
+
+odrv0.axis0.controller.config.control_mode = CONTROL_MODE_POSITION_CONTROL
+odrv0.axis0.controller.config.vel_limit = 50
+odrv0.axis0.controller.config.pos_gain = 15
+odrv0.axis0.controller.config.vel_gain = 0.09
+odrv0.axis0.controller.config.vel_integrator_gain = 0.5
+odrv0.axis0.controller.config.vel_ramp_rate = 20.0  
+odrv0.axis0.controller.config.input_mode = INPUT_MODE_TRAP_TRAJ
+odrv0.axis0.trap_traj.config.vel_limit = 30
+odrv0.axis0.trap_traj.config.accel_limit = 5
+odrv0.axis0.trap_traj.config.decel_limit = 5
+odrv0.save_configuration()
+dump_errors(odrv0) 
+
+#-------------------------- STOP --------------------------------------
+
+
+odrv0.reboot()
+
+
+#-------------------------- STOP --------------------------------------
+
+odrv0.axis0.requested_state = AXIS_STATE_MOTOR_CALIBRATION
+odrv0.axis0.motor.config.pre_calibrated = True
+odrv0.axis0.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
+odrv0.axis0.config.startup_encoder_offset_calibration = True
+odrv0.axis0.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+odrv0.axis0.config.startup_closed_loop_control = True
+odrv0.save_configuration()
+odrv0.reboot() 
+
+#-------------------------- END --------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+#------------------------------------------------------ START AXIS 1 -------------------------------------------------------
+
+
+# Set according to your motor specifications
+odrv0.axis1.motor.config.pole_pairs = 7  
+odrv0.axis1.config.calibration_lockin.current = 4
+odrv0.axis1.motor.config.resistance_calib_max_voltage = 12.0
+#odrv0.axis1.motor.config.motor_type = MOTOR_TYPE_HIGH_CURRENT
+odrv0.axis1.motor.config.current_lim = 8
+odrv0.axis1.motor.config.requested_current_range = 20
+odrv0.save_configuration()
+dump_errors(odrv0) 
+
+#----------------------------------------------------------------
+
+
+# Configure for AS5048A via SPI
+odrv0.axis1.encoder.config.abs_spi_cs_gpio_pin = 7
+odrv0.axis1.encoder.config.mode = ENCODER_MODE_SPI_ABS_AMS
+odrv0.axis1.encoder.config.cpr = 16384  # AS5048A is 14-bit (2^14)
+odrv0.axis1.encoder.config.bandwidth = 1000
+odrv0.save_configuration()
+dump_errors(odrv0) 
+
+
+#----------------------------------------------------------------
+
+odrv0.axis1.controller.config.control_mode = CONTROL_MODE_POSITION_CONTROL
+odrv0.axis1.controller.config.vel_limit = 50
+odrv0.axis1.controller.config.pos_gain = 15
+odrv0.axis1.controller.config.vel_gain = 0.09
+odrv0.axis1.controller.config.vel_integrator_gain = 0.5
+odrv0.axis1.controller.config.vel_ramp_rate = 20.0  # Smooth acceleration
+odrv0.axis1.controller.config.input_mode = INPUT_MODE_TRAP_TRAJ
+odrv0.axis1.trap_traj.config.vel_limit = 30
+odrv0.axis1.trap_traj.config.accel_limit = 5
+odrv0.axis1.trap_traj.config.decel_limit = 5
+odrv0.save_configuration()
+dump_errors(odrv0) 
+
+#-------------------------- STOP --------------------------------------
+
+
+odrv0.reboot()
+
+
+#-------------------------- STOP --------------------------------------
+
+odrv0.axis1.requested_state = AXIS_STATE_MOTOR_CALIBRATION
+odrv0.axis1.motor.config.pre_calibrated = True
+odrv0.axis1.requested_state = AXIS_STATE_ENCODER_OFFSET_CALIBRATION
+odrv0.axis1.config.startup_encoder_offset_calibration = True
+odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+odrv0.axis1.config.startup_closed_loop_control = True
+odrv0.save_configuration()
+odrv0.reboot() 
+
+#-------------------------- END --------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------- TESTING --------------------------------------
+
+odrv0.axis0.controller.input_pos = 1.1
+odrv0.axis1.controller.input_pos = 1.1
+
+odrv0.axis0.controller.input_pos = odrv0.axis0.encoder.pos_estimate
+odrv0.axis1.controller.input_pos = odrv0.axis1.encoder.pos_estimate
+
+
+odrv0.axis0.controller.config.pos_gain = 15.0  # Start conservative due to long arm
+odrv0.axis0.controller.config.vel_gain = 0.09  # Lower for stability with inertia
+odrv0.axis0.controller.config.vel_integrator_gain = 0.05  # Conservative integrator
+odrv0.axis0.controller.config.vel_ramp_rate = 20.0  # Smooth acceleration
+
+odrv0.axis1.controller.config.pos_gain = 15.0  # Start conservative due to long arm
+odrv0.axis1.controller.config.vel_gain = 0.09  # Lower for stability with inertia
+odrv0.axis1.controller.config.vel_integrator_gain = 0.05  # Conservative integrator
+odrv0.axis1.controller.config.vel_ramp_rate = 20.0  # Smooth acceleration
+
+#-------------------------- TESTING --------------------------------------
+
+odrv0.axis0.requested_state = AXIS_STATE_FULL_CALIBRATION_SEQUENCE
+dump_errors(odrv0) 
+
+#-------------------------- DEBUG --------------------------------------
+
+odrv0.reboot()
+odrv0.axis0.clear_errors()
