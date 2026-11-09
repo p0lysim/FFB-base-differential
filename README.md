@@ -26,7 +26,6 @@
 </p>
 
 <p align="center">
-  <a href="README.fr.md">🇫🇷 Lire en français</a> ·
   <a href="#-bill-of-materials">Bill of materials</a> ·
   <a href="#-assembly-guide">Assembly guide</a> ·
   <a href="hardware/stl">STL files on GitHub</a>
@@ -37,16 +36,11 @@
 ## Table of contents
 
 - [Highlights](#-highlights)
-- [Project status](#-project-status)
 - [How it works](#%EF%B8%8F-how-it-works)
 - [Specifications](#-specifications)
 - [Bill of materials](#-bill-of-materials)
-- [Printing](#%EF%B8%8F-printing)
 - [Assembly guide](#-assembly-guide)
 - [Electronics and ODrive setup](#-electronics-and-odrive-setup)
-- [Repository structure](#-repository-structure)
-- [Project history](#%EF%B8%8F-project-history)
-- [Contributing](#-contributing)
 - [License](#-license)
 
 ## ✨ Highlights
@@ -57,22 +51,6 @@
 - **Off-the-shelf electronics.** 2 × 5065 140 KV BLDC motors and one dual-axis MKS XDrive (an ODrive v3.6-compatible board).
 - **Standard bearings.** 12 × 6704 and 2 × 6805, plus M3 screws. No machined parts.
 - **Remixable.** The full CAD assembly (STEP) is included.
-
-## 🚧 Project status
-
-> [!IMPORTANT]
-> **The mechanics and the motor control work. The PC side is not done yet.**
-> The base holds and moves the stick in closed-loop position control (see the GIF above). It does **not
-> yet** show up as a USB game controller, so it cannot receive force effects from a flight simulator
-> (MSFS, DCS, X-Plane, IL-2…) out of the box.
-
-- [x] Differential mechanism designed, printed and assembled
-- [x] Dual BLDC closed-loop control on the ODrive with AS5048A absolute encoders
-- [ ] Torque-mode tuning (`torque_constant`, gains)
-- [ ] USB HID force-feedback (DirectInput / PID) interface with differential mixing
-- [ ] Wiring diagram and assembly photos
-
-Ideas and contributions on the firmware side are very welcome. See [Contributing](#-contributing).
 
 ## ⚙️ How it works
 
@@ -96,28 +74,17 @@ carries the grip:
 The maths, sign conventions and the torque mixing needed for force feedback are in
 [docs/how-it-works.md](docs/how-it-works.md).
 
-<p align="center">
-  <img src="docs/images/drivetrain.jpg" width="640" alt="Drivetrain of the differential FFB base: two BLDC motors, idler gears, side bevel gears and the 60 tooth crown gear">
-</p>
-
 ## 📐 Specifications
 
 | | |
 |---|---|
-| Degrees of freedom | 2 (pitch + roll) |
-| Mechanism | Spiral bevel-gear differential, motors fixed in the base |
-| Reduction | 2:1 on pitch, 6:1 on roll (motor turns per stick turn) |
-| Motors | 2 × BLDC 5065 140 KV (7 pole pairs, Kt ≈ 0.059 N·m/A) |
-| Controller | MKS XDrive (ODrive v3.6 compatible, firmware 0.5.x), dual axis |
-| Sensors | 2 × AS5048A 14-bit magnetic encoders (SPI), one per motor |
-| Theoretical peak stick torque* | ≈ 1.9 N·m pitch · ≈ 5.7 N·m roll |
-| Sensor resolution at the stick | ≈ 0.011° pitch · ≈ 0.004° roll |
-| Footprint | 113 × 136 mm |
-| Height | 154 mm (case) · 247 mm to the top of the grip adapter |
-| Pivot height | 112 mm above the desk |
-| Printed parts | 14 STL files, 25 pieces, PLA |
-
-<sub>* Both motors at the 8 A current limit of the provided ODrive configuration, ideal gears (no friction losses).</sub>
+| Axes | 2 (pitch + roll), bevel-gear differential |
+| Motors | 2 × BLDC 5065 140 KV |
+| Controller | MKS XDrive (ODrive v3.6 compatible) |
+| Sensors | 2 × AS5048A, 14-bit, SPI |
+| Reduction | 2:1 pitch · 6:1 roll |
+| Peak stick torque (theoretical, 8 A) | ≈ 1.9 N·m pitch · ≈ 5.7 N·m roll |
+| Size | 113 × 136 mm footprint, 247 mm tall |
 
 ## 🧾 Bill of materials
 
@@ -168,20 +135,6 @@ The quantity is in each file name (`_x2` means print it twice). The same files a
 
 <sub>Some links above are affiliate links. They cost you nothing and help support the project.</sub>
 
-## 🖨️ Printing
-
-Suggested starting settings (adjust them to your printer):
-
-| | Case parts (panels, supports, caps) | Gears, hub, shafts, yoke |
-|---|---|---|
-| Material | PLA | PLA (PETG also works) |
-| Layer height | 0.2 mm | 0.12–0.16 mm for smoother teeth |
-| Walls | 3 | 4 or more |
-| Infill | 20–30 % | 50–100 % |
-
-Before you start the assembly, check the bearing seats: bearings should press in firmly. If a seat is
-too tight, adjust your printer's horizontal expansion rather than forcing the bearing.
-
 ## 🔧 Assembly guide
 
 <p align="center">
@@ -192,9 +145,10 @@ In the pictures below, **orange** marks the printed parts added at that step. Be
 
 ### Step 1: Side panels
 
-<img src="docs/images/assembly/step-1-side-panels.jpg" width="560" alt="Step 1: pressing two pairs of 6704 bearings into a side panel">
+<img src="docs/images/assembly/step-1-side-panels.jpg" width="560" alt="Step 1: pressing a 6704 bearing into each side of both bores of a side panel">
 
-- Press **2 × 6704** bearings into the upper bore (carrier axis) and **2 × 6704** into the lower bore (idler gear).
+- Upper bore (carrier axis): press one **6704** bearing from the outside and one from the inside.
+- Lower bore (idler gear): same, one **6704** from each side.
 - Repeat with the second side panel. That uses 8 bearings in total.
 
 ### Step 2: Side gears
@@ -274,37 +228,6 @@ The configuration is a list of `odrivetool` commands:
 [`firmware/odrive/odrive_config_as5048a.txt`](firmware/odrive/odrive_config_as5048a.txt).
 The full walkthrough (each parameter, calibration order, tips for torque mode) is in
 [docs/electronics-and-odrive.md](docs/electronics-and-odrive.md).
-
-## 📁 Repository structure
-
-```
-├── hardware/
-│   ├── stl/            14 printable parts (quantity in the file name)
-│   └── step/           full CAD assembly (STEP, stored with Git LFS)
-├── firmware/
-│   └── odrive/         ODrive configuration (odrivetool commands)
-└── docs/
-    ├── how-it-works.md
-    ├── electronics-and-odrive.md
-    └── images/         renders, GIFs, photos, part thumbnails
-```
-
-The STEP file is stored with [Git LFS](https://git-lfs.com/). Run `git lfs install` before cloning,
-or download it from the GitHub web interface.
-
-## 🕰️ Project history
-
-1. **V1 (early 2025):** GBM5208 gimbal motors, Spectral Micro BLDC drivers and an HTD 3M belt drive.
-2. **Stepper experiments (spring 2025):** FOC on stepper motors with SimpleFOC (ESP32, Teensy 4.0), TMC2209 / TMC5160 drivers and an MKS SERVO42C, to make steppers backdrivable.
-3. **V2 (summer 2025, current):** 5065 BLDC motors, ODrive-compatible controller, printed spiral bevel gears and AS5048A absolute encoders.
-
-## 🤝 Contributing
-
-Issues and pull requests are welcome, especially on:
-
-- the USB HID force-feedback firmware and the differential mixing;
-- print and assembly feedback;
-- photos of your build.
 
 ## 📜 License
 
