@@ -1,0 +1,17 @@
+FFB Base Differential - hardware design files
+Copyright (c) 2025-2026 p0lysim
+
+The hardware design of this project (the STL and STEP models in hardware/, the images and the
+documentation in docs/ and the README files) is licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+
+In short, you may share and adapt this work, provided that:
+  - you give appropriate credit and link to this project;
+  - you do not use it for commercial purposes;
+  - you distribute your contributions under the same license.
+
+Full legal code: https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+Summary:         https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+The code and configuration files in firmware/ are licensed separately under the MIT License.
+See firmware/LICENSE.
