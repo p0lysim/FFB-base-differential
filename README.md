@@ -55,7 +55,9 @@
 ## ⚙️ How it works
 
 <p align="center">
-  <img src="docs/images/how-it-works.gif" width="420" alt="Animation of the bevel gear differential: pitch moves both gear trains the same way, roll moves them in opposite directions">
+  <img src="docs/images/how-it-works.gif" height="360" alt="Animation of the bevel gear differential: pitch moves both gear trains the same way, roll moves them in opposite directions">
+  &nbsp;
+  <img src="docs/images/real-mechanism.gif" height="360" alt="Close-up of the printed differential: crown gear, side gears and BLDC motor turning while the stick moves">
 </p>
 
 Each motor drives one **side bevel gear** through a 15T pinion, a 15T idler and a 30T ring (orange
